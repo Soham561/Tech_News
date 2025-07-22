@@ -37,8 +37,10 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Compile Java files
-        run: javac src/Main.java src/API_GET.java
+      - name: Compile Java files with dependencies
+        run: |
+          mkdir -p out
+          javac -cp "libs/*" -d out src/Main.java src/API_GET.java
 
-      - name: Run Java Main
-        run: java -cp src Main
+      - name: Run Java Main with classpath
+        run: java -cp "libs/*:out" Main
