@@ -15,20 +15,20 @@ on:
     - cron: '30 12 * * *'     # 6:00 PM IST
     - cron: '30 14 * * *'     # 8:00 PM IST
     - cron: '30 15 * * *'     # 9:00 PM IST
-  workflow_dispatch:          # ✅ Allow manual run
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:                       # 🌱 GitHub Secrets
+    env:
       API_KEY: ${{ secrets.API_KEY }}
       APP_PASSWD: ${{ secrets.APP_PASSWD }}
       SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
       RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Java 21
@@ -38,7 +38,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Compile Java files
-        run: javac Main.java API_GET.java
+        run: javac src/Main.java src/API_GET.java
 
       - name: Run Java Main
-        run: java Main
+        run: java -cp src Main
